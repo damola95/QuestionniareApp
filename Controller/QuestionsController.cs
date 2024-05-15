@@ -19,7 +19,7 @@ namespace QuestionnaireApp.Controller
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateQuestion([FromBody] QuestionDto questionDto,  CancellationToken cancellationToken)
+        public async Task<IActionResult> CreateQuestion([FromBody] QuestionDto questionDto, CancellationToken cancellationToken)
         {
             if (!ModelState.IsValid)
             {

@@ -3,6 +3,7 @@ using System.Collections.Concurrent;
 using Microsoft.Azure.Cosmos;
 using  QuestionnaireApp.Interface;
 using System.Net;
+using QuestionnaireApp.Constants;
 
 namespace QuestionnaireApp.Repo
 {
@@ -10,15 +11,12 @@ namespace QuestionnaireApp.Repo
     {
         private  Container _container;
         private Database database;
-        private string DB = "applicationdb";
-        private string containerID = "Exams";
-        private string partitionKey = "/id";
 
-        public QuestionRepository(CosmosClient cosmosClient)
+        public QuestionRepository(CosmosClient cosmosClient, Database dataBaseQuestions, Microsoft.Azure.Cosmos.Container container)
         {
-            database = cosmosClient.CreateDatabaseIfNotExistsAsync(DB).Result;
-            _container = database.CreateContainerIfNotExistsAsync(containerID, partitionKey, 400).Result;
-            _container = cosmosClient.GetContainer(DB, containerID);   
+            database = dataBaseQuestions;
+            _container = database.CreateContainerIfNotExistsAsync(QuestionsConstants.containerID, QuestionsConstants.partitionKey, 400).Result;
+            _container = container;   
         }
 
         public async Task<Question> AddQuestionAsync(Question question)
